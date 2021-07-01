@@ -1,0 +1,47 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+#container{
+    width: 600;
+    height: 700px;
+    margin: 1px; 
+    padding: 4px;
+    text-align: center;
+}
+#one{
+    border: 1px solid black;
+    width: 40%;
+    height: 200px;
+    float: left;
+    padding: 5px;
+    text-align: left;
+    
+}
+#two{
+    border: 1px solid black;
+    width: 40%;
+    height: 400px;
+    padding: 5px;
+    text-align: left;
+    
+}
+#three{
+    width: 40%;
+    height: 300px;
+    border: 1px solid black;
+    margin: auto;
+    float: left;
+    padding: 4px;
+    text-align: left;
+}
+#four{
+        width: 100px;
+        height: 50px;
+        border: 1px solid black;
+        padding: 4px;
+}
+span{
+    color: red;
+    font-size:18px;
+}
