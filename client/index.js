@@ -95,6 +95,8 @@ function onGetStudent(event){
     } else {
         document.getElementById("class-invalid").innerHTML="";
     }
+    var studentClassGet = document.getElementById("class-get").value;
+        document.getElementById("demo").innerHTML ="Class :"+ studentClassGet;
 
     var studentRollnoGet = document.getElementById("rollno-get").value;
     if (studentRollnoGet  == ""){
@@ -102,14 +104,16 @@ function onGetStudent(event){
     } else {
         document.getElementById("rollno-invalid").innerHTML="";
     }
-    
+   
     var rollnoValid = /^[0-9]/;
     var isValidRollnoGet = studentRollnoGet.match(rollnoValid);
     if(!isValidRollnoGet) {
-        document.getElementById("rollno-error").innerHTML="**Invalid roll no**";
+        document.getElementById("rollno-invalid").innerHTML="**Invalid roll no**";
     } else{
-        document.getElementById("rollno-error").innerHTML="";
+        document.getElementById("rollno-invalid").innerHTML="";
     }
+    var studentRollnoGet = document.getElementById("rollno-get").value;
+        document.getElementById("demo1").innerHTML ="RollNo :"+ studentRollnoGet;
 
     let studentDataGet = {
         class: studentClassGet,
@@ -134,27 +138,45 @@ function getStudentFromServer(studentData) {
 function onDeleteStudent(event) {
     event.preventDefault();
 
-    var deleteStudent = document.getElementById("delete-student");
     var studentClassDelete = document.getElementById("class-delete").value;
     if(studentClassDelete  == "") {
-        document.getElementById("classError").innerHTML="**Please enter your class name**";
+        document.getElementById("class-val").innerHTML="**Please enter your class name**";
     }
     else {
-        document.getElementById("classError").innerHTML="";    
+        document.getElementById("class-val").innerHTML="";    
     }
 
-    var rollno = /^[0-9]/;
-    var studentRollno = document.getElementById("student-rollno").value;
-
-    if (studentRollno  == ""){
-        document.getElementById("rollnoError").innerHTML="**Please enter your rollno**";
+    var studentRollnoDelete = document.getElementById("rollno-delete").value;
+    if (studentRollnoDelete  == ""){
+        document.getElementById("rollno-val").innerHTML="**Please enter your rollno**";
     } else {
-        document.getElementById("rollnoError").innerHTML="";
+        document.getElementById("rollno-val").innerHTML="";
     }
-    
-    if(studentRollno.match(rollno)){
-        document.getElementById("rollnoError").innerHTML="**only alphabets are allowed**";
+
+    var rollnoVal = /^[0-9]/;
+    var isValidRollnoDelete = studentRollnoDelete.match(rollnoVal);
+    if(!isValidRollnoDelete) {
+        document.getElementById("rollno-val").innerHTML="**Invalid roll no**";
     } else{
-        document.getElementById("rollnoError").innerHTML="";
-    }   
+        document.getElementById("rollno-val").innerHTML="";
+    }
+  
+    let studentDataDelete = {
+        class: studentClassDelete,
+        rollno: studentRollnoDelete
+    };
+    deleteStudentFromServer(studentDataDelete);
+}
+function deleteStudentFromServer(studentData) {
+    let url = "http://localhost:4000/student/delete?";
+    url = url + "class=" + studentData.class;
+    url = url + "&rollno=" + studentData.rollno;
+    fetch(url)
+    .then(resp => resp.json())
+    .then(jsonData => {
+        console.log(jsonData);
+    })
+    .catch(error => {
+        console.log(error);
+    })
 }

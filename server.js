@@ -59,13 +59,13 @@ function insertInDB(student, callBack) {
 // promises
 // async await.
 
-app.get("/student/get",(req,res) => {
+app.get("/student/get", (req,res) => {
     debugger
     function onGet(err, result) {
         debugger
         if (err) {
             console.log(err);
-            result.json({status: 200, error: err});
+            res.json({status: 200, error: err});
         } else {
             res.json({ status : 200, message: result});
         }
@@ -75,7 +75,27 @@ app.get("/student/get",(req,res) => {
 
 function getInDB(student, callback) {
     debugger
-    let sql = "SELECT * FROM poonam.student";
+    let sql = "SELECT * FROM poonam.student where class=" + student.class
+            + " and rollno=" + student.rollno;
+    connection.query(sql, callback);
+}
+
+app.delete("/student/delete", (req,res) => {
+    
+    function onDelete(err, result) {
+        if (err) {
+            console.log(err);
+            res.json({status: 200, error: err});
+        } else {
+            res.json({ status : 200, message: "student deleted successfully" });
+        }
+    }
+    deleteInDB(req.query, onDelete);
+});
+
+function deleteInDB(student, callback) {
+    let sql = "DELETE  FROM poonam.student where class=" + student.class
+            + " and rollno=" + student.rollno;
     connection.query(sql, callback);
 }
 
